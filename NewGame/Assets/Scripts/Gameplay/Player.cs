@@ -6,7 +6,6 @@ public class Player : Entity
 {
 	protected override void Die(){
 		GameManager.Instance.EndGame();
-		print("Game Over");
 	}
 	public override void TakeDamage(int dmg){
 		hp -= dmg;
