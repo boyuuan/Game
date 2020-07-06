@@ -2,36 +2,81 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EntityType{
+public enum EType{
 	Player,
 	Zombie,
 	Archer
 }
 public abstract class Entity : MonoBehaviour
 {
-	public EntityType entityType;
-	[SerializeField]
-	protected int hp = 0;
+	public EType EntityType;
+	protected int hp;
 	protected int damage;
+	protected float moveSpeed;
+	[SerializeField]
+	protected float atkSpeed;
+	protected float range;
+	protected float atkDistance;
+	protected float spawnTimer;
+	protected int maxCount;
+	protected float atkCoolDown;
+	
 	protected void Spawn(){
-		if(!Rules.Instance.maxHP.ContainsKey(entityType)){
-			print("Can't find entityType = " + entityType + " in rules");
+		if(!Rules.Instance.EntityData.ContainsKey(EntityType)){
+			Debug.Log("Can't find entityType = " + EntityType + " in rules");
 			return;
 		}
-		hp = Rules.Instance.maxHP[entityType];
-		print(entityType + " spawned with hp = " + hp);
+		hp = Rules.Instance.EntityData[EntityType].MaxHP;
+		damage = Rules.Instance.EntityData[EntityType].Dmg;
+		moveSpeed = Rules.Instance.EntityData[EntityType].MoveSpeed;
+		atkSpeed = Rules.Instance.EntityData[EntityType].AtkSpeed;
+		range = Rules.Instance.EntityData[EntityType].Range;
+		atkDistance = Rules.Instance.EntityData[EntityType].AtkDistance;
+		spawnTimer = Rules.Instance.EntityData[EntityType].SpawnTimer;
+		maxCount = Rules.Instance.EntityData[EntityType].MaxCount;
+		atkCoolDown = Rules.Instance.EntityData[EntityType].AtkCoolDown;
+		Debug.Log(EntityType + " spawned with hp = " + hp);
 	}
 	protected abstract void Die();
-	public abstract void TakeDamage(int dmg);
-	protected abstract void Attack();
+	public void TakeDmg(int dmg){
+		hp -= dmg;
+		if(hp <= 0) Die();
+	}
     protected virtual void Awake()
     {
-		Debug.Log("entity awake");
         Spawn();
     }
+	protected virtual void Move(Vector3 target){
+		Vector3 diff = target - transform.position;
+		transform.position += diff.normalized * moveSpeed * Time.deltaTime;
+	}
 
     void Update()
     {
         
     }
+}
+
+public class EntityData{
+	public EType EntityType;
+	public int MaxHP;
+	public float MoveSpeed;
+	public float AtkSpeed;
+	public float Range;
+	public int Dmg;
+	public float AtkDistance;
+	public float SpawnTimer;
+	public int MaxCount;
+	public float AtkCoolDown;
+	public EntityData(EType type){
+		EntityType = type;
+		MaxHP = 0;
+		MoveSpeed = 0f;
+		AtkSpeed = 0f;
+		Range = 0f;
+		Dmg = 0;
+		AtkDistance = 0f;
+		SpawnTimer = 0f;
+		MaxCount = 0;
+	}
 }
