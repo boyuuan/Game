@@ -6,11 +6,13 @@ using System;
 public class GameManager : Singleton<GameManager>
 {
 	[SerializeField]
-	private Transform player;
+	private Transform player = null;
+	public bool InputEnabled = true;
 	void Awake(){
-		//Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
+		Debug.Log("GameManager Awake");
 		DontDestroyOnLoad(gameObject);
 		Rules.Instance.Init();
+		Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
 	}
 	public void EndGame(){
 		print("Game Over");

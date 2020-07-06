@@ -23,8 +23,10 @@ public abstract class Entity : MonoBehaviour
 	}
 	protected abstract void Die();
 	public abstract void TakeDamage(int dmg);
-    void Start()
+	protected abstract void Attack();
+    protected virtual void Awake()
     {
+		Debug.Log("entity awake");
         Spawn();
     }
 
