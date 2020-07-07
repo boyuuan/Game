@@ -17,7 +17,7 @@ public class Player : Entity
 	
 	
 	protected override void Die(){
-		GameManager.Instance.EndGame();
+		GameManager.Instance.LoseGame();
 	}
 	private IEnumerator SpawnWait(float s){
 		yield return new WaitForSeconds(s);
@@ -62,6 +62,16 @@ public class Player : Entity
 	
 	void Update(){
 		UpdateState();
+	}
+	
+	void OnTriggerEnter2D(Collider2D other){
+		Entity e = other.gameObject.GetComponent<Entity>();
+		if(state == PlayerState.Attacking){
+			e.TakeDmg(damage);
+		}
+		else{
+			TakeDmg(e.Dmg);
+		}
 	}
 }
 public enum PlayerState{

@@ -22,6 +22,7 @@ public class Zombie : Entity
 	}
 	protected override void Die(){
 		Destroy(gameObject);
+		GameManager.Instance.WinGame();
 	}
 	private void UpdateZombieState(){
 		switch(state){

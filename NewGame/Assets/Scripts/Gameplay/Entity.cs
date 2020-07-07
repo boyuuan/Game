@@ -12,8 +12,12 @@ public abstract class Entity : MonoBehaviour
 	public EType EntityType;
 	protected int hp;
 	protected int damage;
+	public int Dmg{
+		get{
+			return damage;
+		}
+	}
 	protected float moveSpeed;
-	[SerializeField]
 	protected float atkSpeed;
 	protected float range;
 	protected float atkDistance;
@@ -35,7 +39,6 @@ public abstract class Entity : MonoBehaviour
 		spawnTimer = Rules.Instance.EntityData[EntityType].SpawnTimer;
 		maxCount = Rules.Instance.EntityData[EntityType].MaxCount;
 		atkCoolDown = Rules.Instance.EntityData[EntityType].AtkCoolDown;
-		Debug.Log(EntityType + " spawned with hp = " + hp);
 	}
 	protected abstract void Die();
 	public void TakeDmg(int dmg){
