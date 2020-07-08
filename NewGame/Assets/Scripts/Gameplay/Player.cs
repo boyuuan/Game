@@ -1,16 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : Entity
 {
+	public float tunex = .8f;
+	public float tuney = .5f;
 	//[SerializeField]
 	private float depth = 10f;
 	private PlayerState state;
 	private Vector3 atkV;
 	private Vector3 targetPos;
+	private Vector2 screen;
+	private Vector2 edgeV;
 	protected override void Awake(){
 		base.Awake();
+		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 		atkV = Vector3.zero;
 		state = PlayerState.Spawning;
 	}
@@ -23,8 +29,19 @@ public class Player : Entity
 		yield return new WaitForSeconds(s);
 		state = PlayerState.Idle;
 	}
+	private Vector3 CalcActualDest(Vector3 start, float d, Vector3 v, float w, float h){
+		Vector3 target = start + d * v;
+		Vector3 temp = new Vector3(Mathf.Clamp(target.x, -w, w), Mathf.Clamp(target.y, -h, h), 0);
+		float actualD;
+		if(temp.x != target.x)
+			actualD = Mathf.Abs((start.x - temp.x) / (start.x - target.x)) * d;
+		else if(temp.y != target.y)
+			actualD = Mathf.Abs((start.y - temp.y) / (start.y - target.y)) * d;
+		else
+			actualD = d;
+		return start + actualD * v;
+	}
 	private void UpdateState(){
-		//Debug.Log("current state = " + state);
 		switch(state){
 			case PlayerState.Spawning:
 				StartCoroutine(SpawnWait(.1f));
@@ -34,11 +51,11 @@ public class Player : Entity
 					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 					if (Physics.Raycast(ray))
 						Debug.Log("dkslj");
-					//Debug.Log("MousePos = " + Input.mousePosition);
 					var mousePos = Input.mousePosition;
 					var wantedPos = Camera.main.ScreenToWorldPoint (new Vector3 (mousePos.x, mousePos.y, depth));
-					atkV = wantedPos - transform.position;
-					targetPos = atkV.normalized * atkDistance + transform.position;
+					atkV = (wantedPos - transform.position).normalized;
+					edgeV = new Vector2(screen.x - tunex, screen.y - tuney);
+					targetPos = CalcActualDest(transform.position, atkDistance, atkV, edgeV.x, edgeV.y);
 					state = PlayerState.PrepareToAttack;
 				}
 				break;
@@ -61,6 +78,8 @@ public class Player : Entity
 	}
 	
 	void Update(){
+		if(GameManager.Instance.GameState != EGameState.Running)
+			return;
 		UpdateState();
 	}
 	

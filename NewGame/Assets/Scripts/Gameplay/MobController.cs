@@ -12,7 +12,7 @@ public class MobController : Singleton<MobController>
 	private bool mobSpawnStart = false;
 	private GameObject mobs;
 	public void Init(){
-		mobSpawnStart = true;
+		//mobSpawnStart = true;
 		foreach(EType et in GameManager.Instance.Prefabs.Keys){
 			if(et == EType.Player) continue;
 			mobCountMax[et] = Rules.Instance.EntityData[et].MaxCount;
@@ -29,6 +29,8 @@ public class MobController : Singleton<MobController>
 		return true;
 	}
 	void Update(){
+		if(GameManager.Instance.GameState != EGameState.Running)
+			return;
 		UpdateMobs();
 		if(!mobSpawnStart) return;
 		if(isLevelCleared() && AllMobs.Count == 0){
@@ -47,7 +49,9 @@ public class MobController : Singleton<MobController>
 		}
 	}
 	private void SpawnMob(EType et){
-		Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.value, Random.value, 0));
+		Vector3 p = GameObject.Find("Player").transform.position;
+		//Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.value, Random.value, 0));
+		Vector3 pos = new Vector3(Random.Range(p.x - 2f, p.x + 2f), Random.Range(p.y - 2f, p.y + 2f), 0f);
 		GameObject obj = (GameObject)Instantiate(GameManager.Instance.Prefabs[et], pos, Quaternion.identity, mobs.transform);
 		obj.name = GameManager.Instance.Prefabs[et].name + AllMobs.Count.ToString();
 		mobCount[et] ++;

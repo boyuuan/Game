@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EntityType: 1
+  tunex: 0.55
+  tuney: 0.75
 --- !u!61 &6827930067355786427
 BoxCollider2D:
   m_ObjectHideFlags: 0

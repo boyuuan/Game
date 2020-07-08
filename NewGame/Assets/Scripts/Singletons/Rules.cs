@@ -13,7 +13,7 @@ public class Rules : Singleton<Rules>
 		z.MoveSpeed = 2f;
 		z.AtkSpeed = 13f;
 		z.Dmg = 1;
-		z.Range = 2f;
+		z.Range = 1.5f;
 		z.SpawnTimer = 3f;
 		z.AtkDistance = 2.2f;
 		z.MaxCount = 10;
@@ -24,7 +24,7 @@ public class Rules : Singleton<Rules>
 		EntityData p = new EntityData(EType.Player);
 		p.MaxHP = 5;
 		p.MoveSpeed = 16f;
-		p.AtkSpeed = 20f;
+		p.AtkSpeed = 30f;
 		p.Dmg = 1;
 		p.AtkDistance = 3f;
 		

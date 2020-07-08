@@ -4,18 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+public enum EGameState{
+	None = 0,
+	Initing,
+	Running,
+	Pausing,
+	Stop
+}
+
 public class GameManager : Singleton<GameManager>
 {
+	public EGameState GameState;
 	public bool InputEnabled = false;
 	[SerializeField]
 	private GameObject resultPG = null;
 	[SerializeField]
-	private List<GameObject> inspectorPrefabs;
+	private List<GameObject> inspectorPrefabs = null;
 	public Dictionary<EType, GameObject> Prefabs = new Dictionary<EType, GameObject>();
 	void Start(){
 		Application.targetFrameRate = 120;
 	}
 	void Awake(){
+		GameState = EGameState.Initing;
 		DontDestroyOnLoad(gameObject);
 		Rules.Instance.Init();
 		resultPG = transform.Find("ResultPage").gameObject;
@@ -39,14 +49,19 @@ public class GameManager : Singleton<GameManager>
 		var obj = (GameObject)Instantiate(Prefabs[EType.Player], new Vector3(0, 0, 0), Quaternion.identity);
 		obj.name = Prefabs[EType.Player].name;
 		MobController.Instance.Init();
+		GameState = EGameState.Running;
 	}
 	public void LoseGame(){
+		GameState = EGameState.Stop;
+		//Time.timeScale = 0f;
 		MobController.Instance.StopMobSpawn();
 		resultPG.transform.Find("Canvas/Text").GetComponent<Text>().text = "Lost All Hope";
 		InputEnabled = false;
 		resultPG.SetActive(true);
 	}
 	public void WinGame(){
+		GameState = EGameState.Stop;
+		//Time.timeScale = 0f;
 		MobController.Instance.StopMobSpawn();
 		resultPG.transform.Find("Canvas/Text").GetComponent<Text>().text = "Victory";
 		InputEnabled = false;

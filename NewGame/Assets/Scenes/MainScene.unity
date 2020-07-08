@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bc76f5d4772ec4c9b435db3d6cb6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameState: 0
   InputEnabled: 1
   resultPG: {fileID: 1405342637}
   inspectorPrefabs:

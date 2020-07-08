@@ -73,6 +73,8 @@ public class Zombie : Entity
 	
     void Update()
     {
+		if(GameManager.Instance.GameState != EGameState.Running)
+			return;
 		if(state != ZombieState.Attacking){
 			if(player == null)
 				Debug.LogWarning("can't find player");

@@ -57,10 +57,8 @@ public abstract class Entity : MonoBehaviour
 		Vector3 diff = target - transform.position;
 		transform.position += diff.normalized * moveSpeed * Time.deltaTime;
 	}
-
     void Update()
     {
-        
     }
 }
 
