@@ -6,28 +6,25 @@ using System;
 
 public class GameManager : Singleton<GameManager>
 {
-	[SerializeField]
-	private GameObject player = null;
-	[SerializeField]
-	private GameObject zombie = null;
 	public bool InputEnabled = false;
 	[SerializeField]
 	private GameObject resultPG = null;
+	[SerializeField]
+	private List<GameObject> inspectorPrefabs;
+	public Dictionary<EType, GameObject> Prefabs = new Dictionary<EType, GameObject>();
 	void Start(){
 		Application.targetFrameRate = 120;
-		StartCoroutine(DelayGameStart());
 	}
 	void Awake(){
 		DontDestroyOnLoad(gameObject);
 		Rules.Instance.Init();
-		MobController.Instance.Init();
 		resultPG = transform.Find("ResultPage").gameObject;
 		resultPG.SetActive(false);
 		InputEnabled = false;
-	}
-	private IEnumerator Temp(){
-		yield return new WaitForSeconds(.5f);
-		Instantiate(zombie, new Vector3(-4, 0, 0), Quaternion.identity);
+		for(int i = 0; i < inspectorPrefabs.Count; i ++){
+			Prefabs[EType.None + 1 + i] = inspectorPrefabs[i];
+		}
+		StartCoroutine(DelayGameStart());
 	}
 	public void StartGame(){
 		
@@ -36,20 +33,21 @@ public class GameManager : Singleton<GameManager>
 		InputEnabled = false;
 		resultPG.transform.Find("Canvas/Text").GetComponent<Text>().text = "Game Start";
 		resultPG.SetActive(true);
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.5f);
 		resultPG.SetActive(false);
 		InputEnabled = true;
-		var obj = (GameObject)Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
-		obj.name = player.name;
-		obj = (GameObject)Instantiate(zombie, new Vector3(-4, 0, 0), Quaternion.identity);
-		obj.name = zombie.name;
+		var obj = (GameObject)Instantiate(Prefabs[EType.Player], new Vector3(0, 0, 0), Quaternion.identity);
+		obj.name = Prefabs[EType.Player].name;
+		MobController.Instance.Init();
 	}
 	public void LoseGame(){
+		MobController.Instance.StopMobSpawn();
 		resultPG.transform.Find("Canvas/Text").GetComponent<Text>().text = "Lost All Hope";
 		InputEnabled = false;
 		resultPG.SetActive(true);
 	}
 	public void WinGame(){
+		MobController.Instance.StopMobSpawn();
 		resultPG.transform.Find("Canvas/Text").GetComponent<Text>().text = "Victory";
 		InputEnabled = false;
 		resultPG.SetActive(true);

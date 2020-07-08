@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EType{
+	None = 0,
 	Player,
 	Zombie,
 	Archer
@@ -44,6 +45,9 @@ public abstract class Entity : MonoBehaviour
 	public void TakeDmg(int dmg){
 		hp -= dmg;
 		if(hp <= 0) Die();
+	}
+	public bool IsDead(){
+		return hp == 0;
 	}
     protected virtual void Awake()
     {

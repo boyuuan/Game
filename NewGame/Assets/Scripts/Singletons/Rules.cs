@@ -11,7 +11,7 @@ public class Rules : Singleton<Rules>
 		EntityData z = new EntityData(EType.Zombie);
 		z.MaxHP = 1;
 		z.MoveSpeed = 2f;
-		z.AtkSpeed = 15f;
+		z.AtkSpeed = 13f;
 		z.Dmg = 1;
 		z.Range = 2f;
 		z.SpawnTimer = 3f;
@@ -23,7 +23,7 @@ public class Rules : Singleton<Rules>
 		
 		EntityData p = new EntityData(EType.Player);
 		p.MaxHP = 5;
-		p.MoveSpeed = 5f;
+		p.MoveSpeed = 16f;
 		p.AtkSpeed = 20f;
 		p.Dmg = 1;
 		p.AtkDistance = 3f;

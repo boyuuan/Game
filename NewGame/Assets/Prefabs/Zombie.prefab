@@ -95,8 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e0809d7817bf84d985c2f6b426b8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EntityType: 1
-  atkSpeed: 0
+  EntityType: 2
   state: 0
   player: {fileID: 0}
 --- !u!61 &1880444024760454551

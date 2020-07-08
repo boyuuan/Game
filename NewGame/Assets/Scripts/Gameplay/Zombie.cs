@@ -21,8 +21,8 @@ public class Zombie : Entity
 		state = ZombieState.Idle;
 	}
 	protected override void Die(){
-		Destroy(gameObject);
-		GameManager.Instance.WinGame();
+		hp = 0;
+		gameObject.SetActive(false);
 	}
 	private void UpdateZombieState(){
 		switch(state){
