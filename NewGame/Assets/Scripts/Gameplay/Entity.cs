@@ -13,9 +13,10 @@ public abstract class Entity : MonoBehaviour
 	public EType EntityType;
 	protected int hp;
 	protected int damage;
-	public int Dmg{
+	protected int dmgModifier;
+	public virtual int Dmg{
 		get{
-			return damage;
+			return damage * dmgModifier;
 		}
 	}
 	protected float moveSpeed;
@@ -26,7 +27,7 @@ public abstract class Entity : MonoBehaviour
 	protected int maxCount;
 	protected float atkCoolDown;
 	
-	protected void Spawn(){
+	protected virtual void Spawn(){
 		if(!Rules.Instance.EntityData.ContainsKey(EntityType)){
 			Debug.Log("Can't find entityType = " + EntityType + " in rules");
 			return;
@@ -40,6 +41,7 @@ public abstract class Entity : MonoBehaviour
 		spawnTimer = Rules.Instance.EntityData[EntityType].SpawnTimer;
 		maxCount = Rules.Instance.EntityData[EntityType].MaxCount;
 		atkCoolDown = Rules.Instance.EntityData[EntityType].AtkCoolDown;
+		dmgModifier = 1;
 	}
 	protected abstract void Die();
 	public void TakeDmg(int dmg){
@@ -49,7 +51,7 @@ public abstract class Entity : MonoBehaviour
 	public bool IsDead(){
 		return hp == 0;
 	}
-    protected virtual void Awake()
+    protected void Awake()
     {
         Spawn();
     }

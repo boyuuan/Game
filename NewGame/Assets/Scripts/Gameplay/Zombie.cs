@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Zombie : Entity
 {
-	[SerializeField]
+	//[SerializeField]
 	private ZombieState state;
-	[SerializeField]
+	//[SerializeField]
 	private GameObject player;
 	private float distance;
 	private Vector3 targetPos;
@@ -15,14 +15,20 @@ public class Zombie : Entity
 	private float atkWaitTime = 0f;
 	private float coolingT = 0f;
 	private float curAtkDistance = 0f;
-	protected override void Awake(){
-		base.Awake();
+	protected override void Spawn(){
+		base.Spawn();
 		player = GameObject.Find("Player");
 		state = ZombieState.Idle;
+		dmgModifier = 0;
 	}
 	protected override void Die(){
 		hp = 0;
 		gameObject.SetActive(false);
+	}
+	public override int Dmg{
+		get{
+			return damage * dmgModifier;
+		}
 	}
 	private void UpdateZombieState(){
 		switch(state){
@@ -58,8 +64,10 @@ public class Zombie : Entity
 				if(curAtkDistance < atkDistance && Vector3.Dot(targetPos - transform.position, atkV) > 0){
 					transform.position += atkV.normalized * atkSpeed * Time.deltaTime;
 					curAtkDistance += atkSpeed * Time.deltaTime;
+					dmgModifier = 1;
 				}
 				else{
+					dmgModifier = 0;
 					state = ZombieState.Cooling;
 					coolingT = atkCoolDown;
 				}

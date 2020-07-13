@@ -98,8 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EntityType: 1
+  dragOrSprint: 0.1
+  minDistanceThreshold: 0.1
   tunex: 0.55
-  tuney: 0.75
+  tuney: 0.64
+  state: 0
 --- !u!61 &6827930067355786427
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -146,4 +149,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

@@ -12,7 +12,7 @@ public class MobController : Singleton<MobController>
 	private bool mobSpawnStart = false;
 	private GameObject mobs;
 	public void Init(){
-		//mobSpawnStart = true;
+		mobSpawnStart = true;
 		foreach(EType et in GameManager.Instance.Prefabs.Keys){
 			if(et == EType.Player) continue;
 			mobCountMax[et] = Rules.Instance.EntityData[et].MaxCount;

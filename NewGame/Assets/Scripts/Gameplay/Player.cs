@@ -5,22 +5,27 @@ using System;
 
 public class Player : Entity
 {
-	public float tunex = .8f;
-	public float tuney = .5f;
-	//[SerializeField]
+	private float dragOrSprint = .1f;
+	private float minDistanceThreshold = .1f;
+	private float tunex = .8f;
+	private float tuney = .5f;
 	private float depth = 10f;
+	//[SerializeField]
 	private PlayerState state;
 	private Vector3 atkV;
 	private Vector3 targetPos;
 	private Vector2 screen;
 	private Vector2 edgeV;
-	protected override void Awake(){
-		base.Awake();
+	private float timeSinceBtnDown;
+	private bool btnDown;
+	protected override void Spawn(){
+		base.Spawn();
 		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 		atkV = Vector3.zero;
 		state = PlayerState.Spawning;
+		timeSinceBtnDown = 0f;
+		btnDown = false;
 	}
-	
 	
 	protected override void Die(){
 		GameManager.Instance.LoseGame();
@@ -47,16 +52,42 @@ public class Player : Entity
 				StartCoroutine(SpawnWait(.1f));
 				break;
 			case PlayerState.Idle:
+			//TODO #IF UNITY_IOS
+				if(btnDown){
+					timeSinceBtnDown += Time.deltaTime;
+					if(timeSinceBtnDown > dragOrSprint){
+						state = PlayerState.Running;
+					}
+				}
+				if(!btnDown && GameManager.Instance.InputEnabled && Input.GetMouseButtonDown(0)){
+					timeSinceBtnDown = 0f;
+					btnDown = true;
+				}
 				if(GameManager.Instance.InputEnabled && Input.GetMouseButtonUp(0)){
-					Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-					if (Physics.Raycast(ray))
-						Debug.Log("dkslj");
+					//Sprinting and Dragging have the same targetPos, the difference is
+					//Sprinting won't stop until targetPos is reached while Drag will immediately stop while the button is released.
 					var mousePos = Input.mousePosition;
 					var wantedPos = Camera.main.ScreenToWorldPoint (new Vector3 (mousePos.x, mousePos.y, depth));
 					atkV = (wantedPos - transform.position).normalized;
 					edgeV = new Vector2(screen.x - tunex, screen.y - tuney);
 					targetPos = CalcActualDest(transform.position, atkDistance, atkV, edgeV.x, edgeV.y);
 					state = PlayerState.PrepareToAttack;
+					btnDown = false;
+				}
+				break;
+			case PlayerState.Running:
+				if(Input.GetMouseButtonUp(0)){	//Stop Running Immediately
+					btnDown = false;
+					state = PlayerState.Idle;
+				}
+				else{	//Keep running
+					if(!btnDown) Debug.LogWarning("error");
+					var mousePos = Input.mousePosition;
+					var targetPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, depth));
+					var delta = targetPos - transform.position;
+					var distance = Vector3.Distance(targetPos, transform.position);
+					if(distance > minDistanceThreshold)
+						transform.position += delta.normalized * moveSpeed * Time.deltaTime;
 				}
 				break;
 			case PlayerState.PrepareToAttack:
@@ -96,6 +127,7 @@ public class Player : Entity
 public enum PlayerState{
 	Spawning,
 	Idle,
+	Running,
 	PrepareToAttack,
 	Attacking,
 	Hurt,
