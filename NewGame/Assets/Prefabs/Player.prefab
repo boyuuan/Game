@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4057512024377672138}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,11 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EntityType: 1
-  dragOrSprint: 0.1
-  minDistanceThreshold: 0.1
-  tunex: 0.55
-  tuney: 0.64
-  state: 0
+  dragOrSprint: 0.15
 --- !u!61 &6827930067355786427
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -61,7 +61,7 @@ public class Zombie : Entity
 				curAtkDistance = 0;
 				break;
 			case ZombieState.Attacking:
-				if(curAtkDistance < atkDistance && Vector3.Dot(targetPos - transform.position, atkV) > 0){
+				if(curAtkDistance < atkDistance){
 					transform.position += atkV.normalized * atkSpeed * Time.deltaTime;
 					curAtkDistance += atkSpeed * Time.deltaTime;
 					dmgModifier = 1;

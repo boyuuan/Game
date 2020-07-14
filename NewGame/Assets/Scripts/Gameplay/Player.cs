@@ -5,10 +5,11 @@ using System;
 
 public class Player : Entity
 {
+	[SerializeField]
 	private float dragOrSprint = .1f;
 	private float minDistanceThreshold = .1f;
-	private float tunex = .8f;
-	private float tuney = .5f;
+	private float tunex = .64f;
+	private float tuney = .55f;
 	private float depth = 10f;
 	//[SerializeField]
 	private PlayerState state;
@@ -76,6 +77,7 @@ public class Player : Entity
 				}
 				break;
 			case PlayerState.Running:
+				//Debug.Log("running");
 				if(Input.GetMouseButtonUp(0)){	//Stop Running Immediately
 					btnDown = false;
 					state = PlayerState.Idle;

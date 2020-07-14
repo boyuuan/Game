@@ -45,6 +45,7 @@ public abstract class Entity : MonoBehaviour
 	}
 	protected abstract void Die();
 	public void TakeDmg(int dmg){
+		Debug.Log("hp = " + hp);
 		hp -= dmg;
 		if(hp <= 0) Die();
 	}

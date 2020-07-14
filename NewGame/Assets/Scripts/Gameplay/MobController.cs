@@ -13,13 +13,18 @@ public class MobController : Singleton<MobController>
 	private GameObject mobs;
 	public void Init(){
 		mobSpawnStart = true;
+		AllMobs.Clear();
+		timers.Clear();
+		mobCount.Clear();
+		mobCountMax.Clear();
 		foreach(EType et in GameManager.Instance.Prefabs.Keys){
 			if(et == EType.Player) continue;
 			mobCountMax[et] = Rules.Instance.EntityData[et].MaxCount;
 			timers[et] = Rules.Instance.EntityData[et].SpawnTimer;
 			mobCount[et] = 0;
 		}
-		mobs = new GameObject("Mobs");
+		mobs = GameObject.Find("Mobs");
+		if(mobs == null) mobs = new GameObject("Mobs");
 		spawnTimer = 2f;
 	}
 	private bool isLevelCleared(){
