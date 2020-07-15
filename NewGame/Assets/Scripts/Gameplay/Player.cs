@@ -19,6 +19,10 @@ public class Player : Entity
 	private Vector2 edgeV;
 	private float timeSinceBtnDown;
 	private bool btnDown;
+	[SerializeField]
+	private Animator anim;
+	private float deltaX;
+	private bool coolingDown = false;
 	protected override void Spawn(){
 		base.Spawn();
 		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
@@ -53,11 +57,14 @@ public class Player : Entity
 				StartCoroutine(SpawnWait(.1f));
 				break;
 			case PlayerState.Idle:
-			//TODO #IF UNITY_IOS
+			//TODO #IF UNITY_IOS, GetTouch(0)
 				if(btnDown){
 					timeSinceBtnDown += Time.deltaTime;
 					if(timeSinceBtnDown > dragOrSprint){
 						state = PlayerState.Running;
+						anim.SetTrigger("Running");
+						Debug.Log("Trigger running");
+						anim.SetBool("Idle", false);
 					}
 				}
 				if(!btnDown && GameManager.Instance.InputEnabled && Input.GetMouseButtonDown(0)){
@@ -77,10 +84,11 @@ public class Player : Entity
 				}
 				break;
 			case PlayerState.Running:
-				//Debug.Log("running");
-				if(Input.GetMouseButtonUp(0)){	//Stop Running Immediately
+				if(Input.GetMouseButtonUp(0)){  //Stop Running Immediately
 					btnDown = false;
 					state = PlayerState.Idle;
+					anim.SetBool("Idle", true);
+					anim.SetFloat("deltaX", Norm(deltaX));
 				}
 				else{	//Keep running
 					if(!btnDown) Debug.LogWarning("error");
@@ -90,18 +98,39 @@ public class Player : Entity
 					var distance = Vector3.Distance(targetPos, transform.position);
 					if(distance > minDistanceThreshold)
 						transform.position += delta.normalized * moveSpeed * Time.deltaTime;
+					deltaX = delta.x;
+					var animX = delta.x;
+					var animY = delta.y;
+					if(Mathf.Abs(delta.x) < Mathf.Abs(delta.y)) {
+						animX = 0f;
+						animY = animY / Mathf.Abs(animY);
+                    }
+                    else {
+						animY = 0f;
+						animX = animX / Mathf.Abs(animX);
+                    }
+					anim.SetFloat("x", animX);
+					anim.SetFloat("y", animY);
 				}
 				break;
 			case PlayerState.PrepareToAttack:
 				state = PlayerState.Attacking;
+				anim.SetBool("Idle", false);
+				anim.SetTrigger("Attack");
+				anim.SetFloat("deltaX", Norm(atkV.x / Mathf.Abs(atkV.x)));
 				break;
 			case PlayerState.Attacking:
 				if(Vector3.Dot(atkV, transform.position - targetPos) > 0){
-					state = PlayerState.Idle;
+					state = PlayerState.Cooling;
 				}
 				else{
 					transform.position += atkV.normalized * atkSpeed * Time.deltaTime;
+					deltaX = atkV.x;
 				}
+				break;
+			case PlayerState.Cooling:
+				if (!coolingDown)
+					StartCoroutine(AtkCoolDown());
 				break;
 			case PlayerState.Hurt:
 				break;
@@ -109,6 +138,18 @@ public class Player : Entity
 				break;
 		}
 	}
+	private IEnumerator AtkCoolDown() {
+		coolingDown = true;
+		yield return new WaitForSeconds(atkCoolDown);
+		state = PlayerState.Idle;
+		anim.SetBool("Idle", true);
+		anim.SetFloat("deltaX", Norm(deltaX));
+		coolingDown = false;
+	}
+	private float Norm(float x) {
+		if (x == 0) return 1;
+		return x / Mathf.Abs(x);
+    }
 	
 	void Update(){
 		if(GameManager.Instance.GameState != EGameState.Running)
@@ -132,6 +173,7 @@ public enum PlayerState{
 	Running,
 	PrepareToAttack,
 	Attacking,
+	Cooling,
 	Hurt,
 	Dead
 }

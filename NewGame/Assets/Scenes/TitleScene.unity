@@ -358,10 +358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7bc76f5d4772ec4c9b435db3d6cb6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowFPS: 0
   GameState: 0
   InputEnabled: 1
-  resultPG: {fileID: 0}
-  fpsGo: {fileID: 0}
   inspectorPrefabs:
   - {fileID: 534468764969548037, guid: 4fbf197704201a743b654820c1b87107, type: 3}
   - {fileID: 6668751870225685118, guid: 32e2caf5273e6c74a82d8db782baa1a9, type: 3}

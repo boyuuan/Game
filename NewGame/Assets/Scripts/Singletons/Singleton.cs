@@ -13,7 +13,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 				if(_instance == null){
 					_instance = (T)FindObjectOfType(typeof(T));
 					if(_instance == null){
-						Debug.Log("Created " + typeof(T).ToString());
+						//Debug.Log("Created " + typeof(T).ToString());
 						var singletonObject = new GameObject();
 						_instance = singletonObject.AddComponent<T>();
 						singletonObject.name = typeof(T).ToString();

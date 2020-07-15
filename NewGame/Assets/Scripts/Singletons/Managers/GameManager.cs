@@ -16,6 +16,7 @@ public enum EGameState{
 
 public class GameManager : Singleton<GameManager>
 {
+	public bool ShowFPS;
 	public EGameState GameState;
 	public bool InputEnabled = false;
 	private GameObject go_resultPG = null;
@@ -41,12 +42,16 @@ public class GameManager : Singleton<GameManager>
 	}
 	void Update(){
 		if(GameState == EGameState.Title) return;
+		DisplayFPS();
+	}
+	void DisplayFPS() {
+		if (!ShowFPS) return;
 		timer -= Time.deltaTime;
-		if(timer <= 0f){
+		if(timer <= 0f) {
 			text_fps.text = "FPS " + (1f / Time.deltaTime).ToString("F1");
 			timer = 1f;
-		}
-	}
+        }
+    }
 	public void StartGame(){
 		
 	}
@@ -98,7 +103,9 @@ public class GameManager : Singleton<GameManager>
 		else if(scene.name == "MainScene"){
 			GameState = EGameState.Initing;
 			go_resultPG = GameObject.Find("/ResultPage");
+			go_resultPG.SetActive(false);
 			go_fps = GameObject.Find("/FPS");
+			go_fps.SetActive(false);
 			text_fps = go_fps.transform.Find("Text").GetComponent<Text>();
 			StartCoroutine(DelayGameStart());
 		}
