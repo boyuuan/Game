@@ -23,6 +23,8 @@ public class Player : Entity
 	private Animator anim;
 	private float deltaX;
 	private bool coolingDown = false;
+	private float animX;
+	private float animY;
 	protected override void Spawn(){
 		base.Spawn();
 		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
@@ -99,9 +101,9 @@ public class Player : Entity
 					if(distance > minDistanceThreshold)
 						transform.position += delta.normalized * moveSpeed * Time.deltaTime;
 					deltaX = delta.x;
-					var animX = delta.x;
-					var animY = delta.y;
-					if(Mathf.Abs(delta.x) < Mathf.Abs(delta.y)) {
+					animX = delta.x;
+					animY = delta.y;
+					if(Mathf.Abs(animX) < Mathf.Abs(animY)) {
 						animX = 0f;
 						animY = animY / Mathf.Abs(animY);
                     }
@@ -117,7 +119,18 @@ public class Player : Entity
 				state = PlayerState.Attacking;
 				anim.SetBool("Idle", false);
 				anim.SetTrigger("Attack");
-				anim.SetFloat("deltaX", Norm(atkV.x / Mathf.Abs(atkV.x)));
+				animX = atkV.x;
+				animY = atkV.y;
+				if(Mathf.Abs(atkV.x) > Mathf.Abs(atkV.y)) {
+					animY = 0f;
+					animX = animX / Mathf.Abs(animX);
+                }
+                else {
+					animX = 0f;
+					animY = animY / Mathf.Abs(animY);
+                }
+				anim.SetFloat("x", animX);
+				anim.SetFloat("y", animY);
 				break;
 			case PlayerState.Attacking:
 				if(Vector3.Dot(atkV, transform.position - targetPos) > 0){
