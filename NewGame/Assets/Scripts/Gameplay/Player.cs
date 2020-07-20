@@ -19,7 +19,6 @@ public class Player : Entity
 	private Vector2 edgeV;
 	private float timeSinceBtnDown;
 	private bool btnDown;
-	[SerializeField]
 	private Animator anim;
 	private float deltaX;
 	private bool coolingDown = false;
@@ -31,7 +30,7 @@ public class Player : Entity
 		atkV = Vector3.zero;
 		state = PlayerState.Spawning;
 		timeSinceBtnDown = 0f;
-		btnDown = false;
+		anim = GetComponent<Animator>();
 	}
 	
 	protected override void Die(){
@@ -65,7 +64,6 @@ public class Player : Entity
 					if(timeSinceBtnDown > dragOrSprint){
 						state = PlayerState.Running;
 						anim.SetTrigger("Running");
-						Debug.Log("Trigger running");
 						anim.SetBool("Idle", false);
 					}
 				}
