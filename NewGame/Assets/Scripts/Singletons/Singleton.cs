@@ -19,6 +19,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 						singletonObject.name = typeof(T).ToString();
 						DontDestroyOnLoad(singletonObject);
 					}
+                    if (_shuttingDown) {
+
+                    }
 				}
 				return _instance;
 			}
