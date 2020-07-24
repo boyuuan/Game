@@ -24,6 +24,7 @@ public class Player : Entity
 	private bool coolingDown = false;
 	private float animX;
 	private float animY;
+	private SpriteRenderer _light;
 	protected override void Spawn(){
 		base.Spawn();
 		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
@@ -31,6 +32,8 @@ public class Player : Entity
 		state = PlayerState.Spawning;
 		timeSinceBtnDown = 0f;
 		anim = GetComponent<Animator>();
+		_light = transform.Find("Light").GetComponent<SpriteRenderer>();
+		_light.gameObject.SetActive(false);
 	}
 	
 	protected override void Die(){
@@ -58,8 +61,9 @@ public class Player : Entity
 				StartCoroutine(SpawnWait(.1f));
 				break;
 			case PlayerState.Idle:
-			//TODO #IF UNITY_IOS, GetTouch(0)
-				if(btnDown){
+				//TODO #IF UNITY_IOS, GetTouch(0)
+				_light.gameObject.SetActive(false);
+				if (btnDown){
 					timeSinceBtnDown += Time.deltaTime;
 					if(timeSinceBtnDown > dragOrSprint){
 						state = PlayerState.Running;
@@ -117,6 +121,7 @@ public class Player : Entity
 				state = PlayerState.Attacking;
 				anim.SetBool("Idle", false);
 				anim.SetTrigger("Attack");
+				_light.gameObject.SetActive(true);
 				animX = atkV.x;
 				animY = atkV.y;
 				if(Mathf.Abs(atkV.x) > Mathf.Abs(atkV.y)) {

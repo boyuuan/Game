@@ -9,7 +9,7 @@ public class TitleScene : MonoBehaviour {
 	private float interval = .25f;
 	private float timer;
 	private bool flag = true;
-	private List<Vector3> oriPos = null;
+	private List<Vector3> oriPos = new List<Vector3>();
 	private float scale = .02f;
     private void Awake() {
 		foreach (GameObject go in btns) {
