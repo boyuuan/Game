@@ -24,7 +24,14 @@ public class Player : Entity
 	private bool coolingDown = false;
 	private float animX;
 	private float animY;
-	private SpriteRenderer _light;
+	private GameObject _light = null;
+	private GameObject trail = null;
+	[SerializeField]
+	private GameObject blackLight = null;
+	[SerializeField]
+	private GameObject redLight = null;
+	[SerializeField]
+	private float scale = 0f;
 	protected override void Spawn(){
 		base.Spawn();
 		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
@@ -32,8 +39,8 @@ public class Player : Entity
 		state = PlayerState.Spawning;
 		timeSinceBtnDown = 0f;
 		anim = GetComponent<Animator>();
-		_light = transform.Find("Light").GetComponent<SpriteRenderer>();
-		_light.gameObject.SetActive(false);
+		_light = transform.Find("Light").gameObject;
+		trail = blackLight;
 	}
 	
 	protected override void Die(){
@@ -122,6 +129,7 @@ public class Player : Entity
 				anim.SetBool("Idle", false);
 				anim.SetTrigger("Attack");
 				_light.gameObject.SetActive(true);
+				trail.GetComponent<TrailRenderer>().time = Vector3.Distance(targetPos, transform.position) / atkSpeed + atkCoolDown;
 				animX = atkV.x;
 				animY = atkV.y;
 				if(Mathf.Abs(atkV.x) > Mathf.Abs(atkV.y)) {

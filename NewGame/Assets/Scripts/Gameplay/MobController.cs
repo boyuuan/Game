@@ -37,7 +37,7 @@ public class MobController : Singleton<MobController>
 		if(GameManager.Instance.GameState != EGameState.Running)
 			return;
 		UpdateMobs();
-		if(!mobSpawnStart) return;
+		if(!mobSpawnStart || !GameManager.Instance.DoSpawnMobs) return;
 		if(isLevelCleared() && AllMobs.Count == 0){
 			GameManager.Instance.WinGame();
 		}

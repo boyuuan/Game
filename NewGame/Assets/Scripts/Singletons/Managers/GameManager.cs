@@ -27,6 +27,8 @@ public class GameManager : Singleton<GameManager>
 	private List<GameObject> inspectorPrefabs = null;
 	public Dictionary<EType, GameObject> Prefabs = new Dictionary<EType, GameObject>();
 	private Player player = null;
+	public bool Debug;
+	public bool DoSpawnMobs = true;
 	void Start(){
 	}
 	void Awake(){

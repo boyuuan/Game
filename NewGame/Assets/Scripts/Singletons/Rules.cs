@@ -26,7 +26,7 @@ public class Rules : Singleton<Rules>
 		p.MoveSpeed = 4f;
 		p.AtkSpeed = 30f;
 		p.Dmg = 1;
-		p.AtkDistance = 3f;
+		p.AtkDistance = 5f;
 		p.AtkCoolDown = .22f;
 		
 		EntityData[EType.Player] = p;
