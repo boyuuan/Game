@@ -155,10 +155,10 @@ RectTransform:
   m_Father: {fileID: 2134964182}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 776, y: -265}
-  m_SizeDelta: {x: 227.6, y: 126.8}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -378, y: 171}
+  m_SizeDelta: {x: 329.80005, y: 133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &99299782
 MonoBehaviour:
@@ -354,10 +354,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 91
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 7
     m_MaxSize: 132
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -458,10 +458,10 @@ RectTransform:
   m_Father: {fileID: 2134964182}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 339}
-  m_SizeDelta: {x: 992.3, y: 556.8}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -198}
+  m_SizeDelta: {x: 992.3, y: 556.80005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &830833565
 CanvasRenderer:
@@ -751,6 +751,8 @@ MonoBehaviour:
   - {fileID: 2098515593}
   - {fileID: 2041504701}
   - {fileID: 99299780}
+  scale: 2
+  debug: 0
 --- !u!1 &1646471336
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,10 +811,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 91
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 7
     m_MaxSize: 132
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -961,7 +963,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 142
+    m_FontSize: 119
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1113,10 +1115,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 91
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 7
     m_MaxSize: 132
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1241,10 +1243,10 @@ RectTransform:
   m_Father: {fileID: 2134964182}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 776, y: -65}
-  m_SizeDelta: {x: 452.6, y: 123.8}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -378, y: -171}
+  m_SizeDelta: {x: 329.80005, y: 133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041504703
 MonoBehaviour:
@@ -1342,10 +1344,10 @@ RectTransform:
   m_Father: {fileID: 2134964182}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 776, y: 135}
-  m_SizeDelta: {x: 329.8, y: 133}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -378, y: -506}
+  m_SizeDelta: {x: 329.80005, y: 133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2098515595
 MonoBehaviour:
@@ -1386,7 +1388,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1240274798}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1485,9 +1487,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 2436, y: 1125}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_ReferenceResolution: {x: 1680, y: 1050}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1501,7 +1503,7 @@ Canvas:
   m_GameObject: {fileID: 2134964181}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1135596176}
   m_PlaneDistance: 100
   m_PixelPerfect: 0

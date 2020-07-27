@@ -10,10 +10,12 @@ public class TitleScene : MonoBehaviour {
 	private float timer;
 	private bool flag = true;
 	private List<Vector3> oriPos = new List<Vector3>();
+	[SerializeField]
 	private float scale = .02f;
+	public bool debug = false;
     private void Awake() {
 		foreach (GameObject go in btns) {
-			oriPos.Add(go.transform.position);
+			oriPos.Add(go.transform.localPosition);
 		}
 		timer = interval;
 	}
@@ -27,14 +29,15 @@ public class TitleScene : MonoBehaviour {
 		Application.Quit();
 	}
 	void Update() {
+		if (debug) return;
 		timer -= Time.deltaTime;
 		if(timer <= 0) {
 			for(int i = 0; i < btns.Count; i ++) {
                 if (flag) {
-					btns[i].transform.position += GetRandVec();
+					btns[i].transform.localPosition += GetRandVec();
                 }
                 else {
-					btns[i].transform.position = oriPos[i];
+					btns[i].transform.localPosition = oriPos[i];
                 }
             }
 			flag = !flag;
