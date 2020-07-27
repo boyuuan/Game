@@ -30,8 +30,11 @@ public class Player : Entity
 	private GameObject blackLight = null;
 	[SerializeField]
 	private GameObject redLight = null;
-	[SerializeField]
-	private float scale = 0f;
+	private float hurtTime = 2f;
+	private float hurtTimer = 0f;
+	private bool isBeingHurt;
+	public SpriteRenderer sp_player;
+	public SpriteRenderer sp_sword;
 	protected override void Spawn(){
 		base.Spawn();
 		screen = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
@@ -41,6 +44,7 @@ public class Player : Entity
 		anim = GetComponent<Animator>();
 		_light = transform.Find("Light").gameObject;
 		trail = blackLight;
+		hurtTimer = 0f;
 	}
 	
 	protected override void Die(){
@@ -156,8 +160,6 @@ public class Player : Entity
 				if (!coolingDown)
 					StartCoroutine(AtkCoolDown());
 				break;
-			case PlayerState.Hurt:
-				break;
 			case PlayerState.Dead:
 				break;
 		}
@@ -179,7 +181,24 @@ public class Player : Entity
 		if(GameManager.Instance.GameState != EGameState.Running)
 			return;
 		UpdateState();
+        if (isBeingHurt) {
+			PlayerBeingHurt();
+        }
 	}
+	private void PlayerBeingHurt() {
+		if(hurtTimer >= hurtTime) {
+			isBeingHurt = false;
+			sp_player.color = new Color(1f, 1f, 1f, 1f);
+			sp_sword.color = new Color(1f, 1f, 1f, 1f);
+			hurtTimer = 0f;
+		}
+        else {
+			hurtTimer += Time.deltaTime;
+			float d = 2 * Mathf.Abs(.5f - Mathf.Abs(hurtTimer - 1f));
+			sp_player.color = new Color(1f, 1f, 1f, d);
+			sp_sword.color = new Color(1f, 1f, 1f, d);
+        }
+    }
 	
 	void OnTriggerEnter2D(Collider2D other){
 		Entity e = other.gameObject.GetComponent<Entity>();
@@ -187,7 +206,10 @@ public class Player : Entity
 			e.TakeDmg(damage);
 		}
 		else{
+			if (isBeingHurt || e.Dmg == 0) return;
+			isBeingHurt = true;
 			TakeDmg(e.Dmg);
+			GameController.Instance.PlayerGetHurt();
 		}
 	}
 }
@@ -198,6 +220,7 @@ public enum PlayerState{
 	PrepareToAttack,
 	Attacking,
 	Cooling,
-	Hurt,
+	//Hurt, //This is better handled outside of the state machine because as design, the player can still do all these things while being hurt
+	//The only effect is the animation and the invinsible state.
 	Dead
 }

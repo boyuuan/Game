@@ -103,6 +103,8 @@ MonoBehaviour:
   dragOrSprint: 0.15
   blackLight: {fileID: 7270566099951466428}
   redLight: {fileID: 6454617726742618126}
+  sp_player: {fileID: 534468764969548036}
+  sp_sword: {fileID: 7153182140115644292}
 --- !u!61 &6827930067355786427
 BoxCollider2D:
   m_ObjectHideFlags: 0

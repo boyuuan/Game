@@ -29,7 +29,13 @@ public class GameManager : Singleton<GameManager>
 	private Player player = null;
 	public bool Debug;
 	public bool DoSpawnMobs = true;
+	public Player Player {
+        get {
+			return player;
+        }
+    }
 	void Start(){
+		PlayerProfile.Instance.Init();
 	}
 	void Awake(){
 		if(Instance != this){
@@ -93,6 +99,8 @@ public class GameManager : Singleton<GameManager>
 		Destroy(player.gameObject);
 		SceneManager.LoadScene("TitleScene");
 	}
+
+    [Obsolete]
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 		if(scene.name == "TitleScene"){
@@ -104,9 +112,12 @@ public class GameManager : Singleton<GameManager>
 		}
 		else if(scene.name == "MainScene"){
 			GameState = EGameState.Initing;
-			go_resultPG = GameObject.Find("/ResultPage");
+            foreach (GameObject go in FindObjectsOfTypeAll(typeof(GameObject))
+                as GameObject[]) {
+				if (go.name == "ResultPage") go_resultPG = go;
+				else if (go.name == "FPS") go_fps = go;
+            }
 			go_resultPG.SetActive(false);
-			go_fps = GameObject.Find("/FPS");
 			go_fps.SetActive(false);
 			text_fps = go_fps.transform.Find("Text").GetComponent<Text>();
 			StartCoroutine(DelayGameStart());

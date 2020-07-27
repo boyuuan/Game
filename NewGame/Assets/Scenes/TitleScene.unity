@@ -249,7 +249,7 @@ RectTransform:
   m_GameObject: {fileID: 266473570}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.03, y: 0.75, z: 1}
+  m_LocalScale: {x: 1.1, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 2041504702}
   m_RootOrder: 0
@@ -409,6 +409,8 @@ MonoBehaviour:
   inspectorPrefabs:
   - {fileID: 534468764969548037, guid: 4fbf197704201a743b654820c1b87107, type: 3}
   - {fileID: 6668751870225685118, guid: 32e2caf5273e6c74a82d8db782baa1a9, type: 3}
+  Debug: 0
+  DoSpawnMobs: 1
 --- !u!4 &595474269
 Transform:
   m_ObjectHideFlags: 0
