@@ -29,6 +29,7 @@ public class GameManager : Singleton<GameManager>
 	private Player player = null;
 	public bool Debug;
 	public bool DoSpawnMobs = true;
+	public bool PlayerInvinsible = false;
 	public Player Player {
         get {
 			return player;
