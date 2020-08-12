@@ -1,6 +1,8 @@
 # Game Type: Top-down 2D RPG.
 # Name: TBD.
 # Development & Art: Bo Yuan.
+# Game Engine: Unity.
+# Language: C#.
 # Screenshots:
 Title:
 ![TItle](https://user-images.githubusercontent.com/42981583/88516408-3a2bbb80-cfbb-11ea-9a08-b2baf2ef7a34.PNG)
