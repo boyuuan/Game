@@ -208,7 +208,7 @@ public class Player : Entity
 		else{
 			if (isBeingHurt || e.Dmg == 0) return;
 			isBeingHurt = true;
-			TakeDmg(e.Dmg);
+			if(!GameManager.Instance.PlayerInvinsible) TakeDmg(e.Dmg);
 			GameController.Instance.PlayerGetHurt();
 		}
 	}
