@@ -23,6 +23,7 @@ public class GameController : Singleton<GameController>
     public void PlayerGetHurt() {
         if (playerCurHP == 0) return;
         StartCoroutine(FullScreenHurtEffect());
+        if (GameManager.Instance.PlayerInvinsible) return;
         playerCurHP--;
         hearts.transform.GetChild(playerCurHP).GetChild(0).gameObject.SetActive(true);
     }
